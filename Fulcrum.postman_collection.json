@@ -1,0 +1,521 @@
+{
+	"info": {
+		"_postman_id": "0ac89f3e-672c-4667-be36-7ac8159ffc20",
+		"name": "Fulcrum",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Signup",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"IIT\",\n    \"last_name\": \"Student\",\n    \"email\": \"student@ds.study.iitm.ac.in\",\n    \"roll_number\": \"21f1000900\",\n    \"password\": \"Test123@\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authentication-Token",
+								"value": "",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"amol@hatwar.org\",\n    \"password\": \"Test123@\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signout",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"variable_key\", \"variable_value\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authentication-Token",
+								"value": "{{AuthToken}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/signout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"signout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authentication-Token",
+								"value": ".eJwFwUkVwDAIBUAvUcDyE6iWvh5Ygn8JnXkXej_CfDg8b_vsEMw4yXFvmxIqtUJSdaiJRDDa6HaOTgLr-wGAQhMA.ZDqXkA.EoESrNk3duTKmsC0pz9xNuhtYS4",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"subject\": \"How do I get admitted to IIT Madras?\"\n    \"message\": \"You can get admitted to IIT Madras by completing various entrance examinations and paying the required fees.\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ticket",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authentication-Token",
+								"value": ".eJwFwUkVwDAIBUAvUcDyE6iWvh5Ygn8JnXkXej_CfDg8b_vsEMw4yXFvmxIqtUJSdaiJRDDa6HaOTgLr-wGAQhMA.ZDo_dg.WsMfiBTSCzumpwwOB1WJad0dbPw",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"subject\": \"How do I get admitted to IIT Madras?\",\n    \"message\": \"I want to find out how does one get admitted at IIT Madras\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/tickets/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"tickets",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Respond",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authentication-Token",
+								"value": ".eJwFwdEVgDAIA8BdOkHRFNpZfH4QiPuP4N0zVMbpjs9Fm0tK1QGwb9Kt09kThhBKwEmFNVfkvhgdS-P9AZpsEzs.ZDpOBQ.l-B5AKQdmFpZ65pVCY26uT8--Lg",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/tickets/1/respond",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"tickets",
+								"1",
+								"respond"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Promote",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authentication-Token",
+								"value": ".eJwFwckRgDAMA8BeqCCX5FALwyNGcv8lsPtcRwloZt2sD-5HdNJDk0BsMRyx2h7lWXAafWmTOFpsqOv9AamBEy0.ZDpZHw.t-19eqEZoyVxAV707mb5MJMv0aM",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/tickets/1/promote",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"tickets",
+								"1",
+								"promote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FAQ List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/tickets/faqs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"tickets",
+								"faqs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FAQ Detail",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/tickets/faqs/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"tickets",
+								"faqs",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "My Tickets",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authentication-Token",
+								"value": ".eJwFwUkVwDAIBUAvUcDyE6iWvh5Ygn8JnXkXej_CfDg8b_vsEMw4yXFvmxIqtUJSdaiJRDDa6HaOTgLr-wGAQhMA.ZDqq1g.TZwIvTLgAF73J_JyecoxCZ0rsiU",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/tickets/my",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"tickets",
+								"my"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vote",
+			"item": [
+				{
+					"name": "Up",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authentication-Token",
+								"value": ".eJwFwUkVwDAIBUAvUcDyE6iWvh5Ygn8JnXkXej_CfDg8b_vsEMw4yXFvmxIqtUJSdaiJRDDa6HaOTgLr-wGAQhMA.ZDpnBQ.rwXRkNcGfafuNqOlTv9saqlraGU",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/tickets/1/vote/down",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"tickets",
+								"1",
+								"vote",
+								"down"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Down",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authentication-Token",
+								"value": ".eJwFwUkVwDAIBUAvUcDyE6iWvh5Ygn8JnXkXej_CfDg8b_vsEMw4yXFvmxIqtUJSdaiJRDDa6HaOTgLr-wGAQhMA.ZDpnBQ.rwXRkNcGfafuNqOlTv9saqlraGU",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/tickets/1/vote/down",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"tickets",
+								"1",
+								"vote",
+								"down"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authentication-Token",
+								"value": ".eJwFwUkVwDAIBUAvUcDyE6iWvh5Ygn8JnXkXej_CfDg8b_vsEMw4yXFvmxIqtUJSdaiJRDDa6HaOTgLr-wGAQhMA.ZDpnBQ.rwXRkNcGfafuNqOlTv9saqlraGU",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/tickets/1/vote/cancel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"tickets",
+								"1",
+								"vote",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "AuthToken",
+			"value": "eJwFwUkVwDAIBUAvUcDyE6iWvh5Ygn8JnXkXej_CfDg8b_vsEMw4yXFvmxIqtUJSdaiJRDDa6HaOTgLr-wGAQhMA.ZDo_IA.Gp4PNudI2ypbclwuY76SadbtQU8\n",
+			"type": "default"
+		}
+	]
+}
