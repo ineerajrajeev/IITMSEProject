@@ -7,9 +7,7 @@
         <a class="mr-5 hover:text-gray-900" href="/student/dashboard"
           >Dashboard</a
         >
-        <a class="mr-5 hover:text-gray-900" href="/student/viewtickets"
-          >Tickets</a
-        >
+        <a class="mr-5 hover:text-gray-900" href="/student/tickets">Tickets</a>
         <a class="mr-5 hover:text-gray-900" href="/student/profile">Profile</a>
         <a class="hover:text-gray-900" href="/faq" target="_blank">FAQs</a>
       </nav>

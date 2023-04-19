@@ -106,8 +106,15 @@ def fetch_my_detail(id):
 @ticket_module.route('/open', methods=['GET'])
 def fetch_open():
     tickets = Ticket.query.filter_by(status="open").all()
-    schema = TicketSchema()
-    return schema.dump(tickets, many=True)
+    response = [
+        {
+            'id': t.id,
+            'subject': t.subject,
+            'status': t.status,
+            'created_at': str(t.created_at).split()[0],
+        } for t in tickets
+    ]
+    return jsonify(response)
 
 # Get unanswered list of closed tickets
 
@@ -116,8 +123,15 @@ def fetch_open():
 @ticket_module.route('/closed', methods=['GET'])
 def fetch_closed():
     tickets = Ticket.query.filter_by(status="closed").all()
-    schema = TicketSchema()
-    return schema.dump(tickets, many=True)
+    response = [
+        {
+            'id': t.id,
+            'subject': t.subject,
+            'status': t.status,
+            'created_at': str(t.created_at).split()[0],
+        } for t in tickets
+    ]
+    return jsonify(response)
 
 # Get FAQed tickets across all users
 

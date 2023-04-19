@@ -16,7 +16,7 @@
         <div class="container px-5 py-24 mx-auto">
           <div
             class="-my-8 divide-y-2 divide-gray-100"
-            v-for="ticket in tickets"
+            v-for="ticket in open_tickets"
             :key="ticket.id"
           >
             <div class="py-8 flex flex-wrap md:flex-nowrap">
@@ -81,13 +81,13 @@
     </div>
     <div
       class="flex flex-col text-center w-full mb-12"
-      v-if="open_tickets.length != 0"
+      v-if="closed_tickets.length != 0"
     >
       <section class="text-gray-600 body-font overflow-hidden">
         <div class="container px-5 py-24 mx-auto">
           <div
             class="-my-8 divide-y-2 divide-gray-100"
-            v-for="ticket in tickets"
+            v-for="ticket in closed_tickets"
             :key="ticket.id"
           >
             <div class="py-8 flex flex-wrap md:flex-nowrap">
@@ -179,14 +179,29 @@ export default {
     },
     async function () {
       await axios
-        .get("http://localhost:8000/api/tickets/my", {
+        .get("http://localhost:8000/api/tickets/open", {
           headers: {
             "Content-Type": "application/json",
             "Authentication-token": localStorage.getItem("token"),
           },
         })
         .then((response) => {
-          this.tickets = response.data;
+          this.open_tickets = response.data;
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+    },
+    async function () {
+      await axios
+        .get("http://localhost:8000/api/tickets/closed", {
+          headers: {
+            "Content-Type": "application/json",
+            "Authentication-token": localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          this.closed_tickets = response.data;
         })
         .catch((error) => {
           console.log(error.response.data);
