@@ -7,6 +7,7 @@ from api.ticket.schemas import TicketInputSchema, ResponseInputSchema, TicketSch
 
 ticket_module = Blueprint('ticket', __name__, url_prefix='/api/tickets')
 
+
 @ticket_module.route('/create', methods=['POST'])
 @student_permission.require()
 def create():
@@ -22,11 +23,12 @@ def create():
         db.session.add(ticket)
         db.session.commit()
         resp = Response(ticket_id=ticket.id,
-            user_id=current_user.id,
-            message=data['message'])
+                        user_id=current_user.id,
+                        message=data['message'])
         db.session.add(resp)
         db.session.commit()
         return jsonify({'id': ticket.id,  'status': ticket.status, 'subject': ticket.subject, 'message': resp.message}), 201
+
 
 @ticket_module.route('/<id>/respond', methods=['POST'])
 @staff_permission.require()
@@ -41,10 +43,10 @@ def respond(id):
     else:
         ticket = Ticket.query.filter_by(id=id, status="open").first()
         if ticket:
-            ticket.status="closed"
+            ticket.status = "closed"
             resp = Response(ticket_id=id,
-                user_id=current_user.id,
-                message=data['message'])
+                            user_id=current_user.id,
+                            message=data['message'])
             db.session.add(ticket)
             db.session.add(resp)
             db.session.commit()
@@ -52,27 +54,41 @@ def respond(id):
         else:
             abort(422, str({'error': 'Ticket already closed'}))
 
+
 @ticket_module.route('/<id>/promote', methods=['PUT'])
 @supervisor_permission.require()
 def promote(id):
-        ticket = Ticket.query.filter_by(id=id, status="closed").first()
-        if ticket:
-            ticket.faqed=True
-            db.session.add(ticket)
-            db.session.commit()
-            return jsonify({'status': 'OK', 'message': 'Ticket promoted'}), 201
-        else:
-            abort(422, str({'error': 'Ticket does not exist, or is open, or already promoted'}))
+    ticket = Ticket.query.filter_by(id=id, status="closed").first()
+    if ticket:
+        ticket.faqed = True
+        db.session.add(ticket)
+        db.session.commit()
+        return jsonify({'status': 'OK', 'message': 'Ticket promoted'}), 201
+    else:
+        abort(
+            422, str({'error': 'Ticket does not exist, or is open, or already promoted'}))
 
 # Get the current users (Student) complete list of tickets
+
+
 @student_permission.require()
 @ticket_module.route('/my', methods=['GET'])
 def fetch_my():
     tickets = Ticket.query.filter_by(user_id=current_user.id).all()
-    schema = TicketSchema()
-    return schema.dump(tickets, many=True)
+    tickets = [
+        {
+            'id': t.id,
+            'subject': t.subject,
+            'status': t.status,
+            'created_at': t.created_at,
+        }
+        for t in tickets
+    ]
+    return tickets
 
 # Get the current users (Student) ticket detail
+
+
 @student_permission.require()
 @ticket_module.route('/my/<id>', methods=['GET'])
 def fetch_my_detail(id):
@@ -81,9 +97,11 @@ def fetch_my_detail(id):
     for r in ticket.responses:
         messages.append(r.message)
     return jsonify({'id': ticket.id, 'subject': ticket.subject,
-        'status': ticket.status, 'messages': messages})
+                    'status': ticket.status, 'messages': messages})
 
 # Get unanswered list of unanswered tickets
+
+
 @staff_permission.require()
 @ticket_module.route('/open', methods=['GET'])
 def fetch_open():
@@ -92,6 +110,8 @@ def fetch_open():
     return schema.dump(tickets, many=True)
 
 # Get unanswered list of closed tickets
+
+
 @staff_permission.require()
 @ticket_module.route('/closed', methods=['GET'])
 def fetch_closed():
@@ -100,6 +120,8 @@ def fetch_closed():
     return schema.dump(tickets, many=True)
 
 # Get FAQed tickets across all users
+
+
 @ticket_module.route('/faqs', methods=['GET'])
 def fetch_faqs():
     faqs = Ticket.query.filter_by(status="closed", faqed=True).all()
@@ -107,6 +129,8 @@ def fetch_faqs():
     return schema.dump(faqs, many=True)
 
 # Get detail of one particular FAQ
+
+
 @ticket_module.route('/faqs/<id>', methods=['GET'])
 def fetch_faq_detail(id):
     faq = Ticket.query.filter_by(status="closed", faqed=True, id=id).first()

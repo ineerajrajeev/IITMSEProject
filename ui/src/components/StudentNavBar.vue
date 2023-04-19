@@ -4,8 +4,12 @@
       class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center"
     >
       <nav class="flex lg:w-2/5 flex-wrap items-center text-base md:ml-auto">
-        <a class="mr-5 hover:text-gray-900">Recetnts</a>
-        <a class="mr-5 hover:text-gray-900">Tickets</a>
+        <a class="mr-5 hover:text-gray-900" href="/student/dashboard"
+          >Dashboard</a
+        >
+        <a class="mr-5 hover:text-gray-900" href="/student/viewtickets"
+          >Tickets</a
+        >
         <a class="mr-5 hover:text-gray-900" href="/student/profile">Profile</a>
         <a class="hover:text-gray-900" href="/faq" target="_blank">FAQs</a>
       </nav>

@@ -46,6 +46,22 @@ const routes = [
       ),
   },
   {
+    path: "/student/ViewTickets",
+    name: "student tickets dashboard",
+    component: () =>
+      import(
+        /* webpackChunkName: "dashboard" */ "../views/Student/TicketsView.vue"
+      ),
+  },
+  {
+    path: "/student/CreateTicket",
+    name: "student tickets dashboard",
+    component: () =>
+      import(
+        /* webpackChunkName: "dashboard" */ "../views/Student/CreateTicket.vue"
+      ),
+  },
+  {
     path: "/student/profile",
     name: "student profile",
     component: () =>

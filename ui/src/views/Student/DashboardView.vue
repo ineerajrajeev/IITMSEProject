@@ -22,20 +22,19 @@
           >
             <div class="py-8 flex flex-wrap md:flex-nowrap">
               <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-                <span class="font-semibold title-font text-gray-700">Date</span>
+                <span class="font-semibold title-font text-gray-700"
+                  >Status</span
+                >
                 <span class="mt-1 text-gray-500 text-sm">{{
-                  ticket.created_at
+                  ticket.status
                 }}</span>
               </div>
               <div class="md:flex-grow">
                 <h2 class="text-2xl font-medium text-gray-900 title-font mb-2">
-                  Bitters hashtag waistcoat fashion axe chia unicorn
+                  {{ ticket.subject }}
                 </h2>
                 <p class="leading-relaxed">
-                  Glossier echo park pug, church-key sartorial biodiesel
-                  vexillologist pop-up snackwave ramps cornhole. Marfa 3 wolf
-                  party messenger bag selfies, poke vaporware kombucha
-                  lumbersexual pork belly polaroid hoodie portland craft beer.
+                  {{ ticket.created_at }}
                 </p>
                 <a class="text-indigo-500 inline-flex items-center mt-4"
                   >Learn More
@@ -69,11 +68,12 @@
             >
               You have not created any ticket until now.
             </h1>
-            <button
+            <a
+              href="/student/CreateTicket"
               class="flex-shrink-0 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-10 sm:mt-0"
             >
               Create
-            </button>
+            </a>
           </div>
         </div>
       </section>
