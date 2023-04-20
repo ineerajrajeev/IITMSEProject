@@ -26,7 +26,7 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
   {
-    path: "/SignUp",
+    path: "/register",
     name: "SignUp",
     component: () =>
       import(/* webpackChunkName: "signup" */ "../views/RegisterView.vue"),
@@ -59,6 +59,22 @@ const routes = [
     component: () =>
       import(
         /* webpackChunkName: "dashboard" */ "../views/Student/CreateTicket.vue"
+      ),
+  },
+  {
+    path: "/student/ViewTicket/:id",
+    name: "student view ticket",
+    component: () =>
+      import(
+        /* webpackChunkName: "dashboard" */ "../views/Student/ViewTicket.vue"
+      ),
+  },
+  {
+    path: "/student/tickets/:id",
+    name: "student view other's ticket",
+    component: () =>
+      import(
+        /* webpackChunkName: "dashboard" */ "../views/Student/ViewOtherTicket.vue"
       ),
   },
   {

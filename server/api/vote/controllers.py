@@ -6,6 +6,7 @@ from api.vote.models import Vote
 
 vote_module = Blueprint('vote', __name__, url_prefix='/api/tickets/<id>/vote')
 
+
 @vote_module.route('/up', methods=['PATCH'])
 @student_permission.require()
 def up(id):
@@ -19,6 +20,7 @@ def up(id):
         db.session.commit()
         return jsonify({'status': 'OK', 'message': 'Voting successful'}), 201
 
+
 @vote_module.route('/down', methods=['PATCH'])
 @student_permission.require()
 def down(id):
@@ -31,6 +33,7 @@ def down(id):
         db.session.add(vote)
         db.session.commit()
         return jsonify({'status': 'OK', 'message': 'Voting successful'}), 201
+
 
 @vote_module.route('/cancel', methods=['DELETE'])
 @student_permission.require()

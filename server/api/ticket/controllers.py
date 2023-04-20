@@ -30,6 +30,48 @@ def create():
         return jsonify({'id': ticket.id,  'status': ticket.status, 'subject': ticket.subject, 'message': resp.message}), 201
 
 
+@ticket_module.route('/create_tagged', methods=['POST'])
+@student_permission.require()
+def create_tagged():
+    data = {k: v.strip() for k, v in request.get_json().items()}
+    schema = TicketTagInputSchema()
+    errors = schema.validate(data)
+
+    if errors:
+        # Validation Error
+        abort(422, str(errors))
+    else:
+        ticket = Ticket(user_id=current_user.id, subject=data['subject'])
+        db.session.add(ticket)
+        db.session.commit()
+        resp = Response(ticket_id=ticket.id,
+            user_id=current_user.id,
+            message=data['message'])
+        db.session.add(resp)
+        db.session.commit()
+
+        tags = data['tag_list'].split(",")
+        tags = [x.strip(' ') for x in tags]
+
+        existing = {}
+        for tag in tags:
+            t = Tag.query.filter_by(name=tag).first()
+            if t:
+                existing[t.name] = t.id
+            else:
+                t = Tag(name=tag, user_id=current_user.id)
+                db.session.add(t)
+                db.session.commit()
+                existing[t.name] = t.id
+
+        for t in [*existing.values()]:
+            tt = TicketsTags(tag_id=t, ticket_id=ticket.id)
+            db.session.add(tt)
+            db.session.commit()
+
+        return jsonify({'id': ticket.id,  'status': ticket.status, 'subject': ticket.subject, 'message': resp.message, 'tags': existing}), 201
+
+
 @ticket_module.route('/<id>/respond', methods=['POST'])
 @staff_permission.require()
 def respond(id):
@@ -80,7 +122,7 @@ def fetch_my():
             'id': t.id,
             'subject': t.subject,
             'status': t.status,
-            'created_at': t.created_at,
+            'created_at': str(t.created_at).split()[0],
         }
         for t in tickets
     ]
@@ -95,8 +137,8 @@ def fetch_my_detail(id):
     ticket = Ticket.query.filter_by(user_id=current_user.id, id=id).first()
     messages = []
     for r in ticket.responses:
-        messages.append(r.message)
-    return jsonify({'id': ticket.id, 'subject': ticket.subject,
+        messages.append([r.message, r.created_at])
+    return jsonify({'id': ticket.id, 'subject': ticket.subject, 'created_on': ticket.created_at,
                     'status': ticket.status, 'messages': messages})
 
 # Get unanswered list of unanswered tickets
@@ -152,3 +194,39 @@ def fetch_faq_detail(id):
     for r in faq.responses:
         messages.append(r.message)
     return jsonify({'id': faq.id, 'subject': faq.subject, 'messages': messages})
+
+# Respond to preexisting ticket by student
+
+
+@ticket_module.route('/text_back/<id>', methods=['POST'])
+@student_permission.require()
+def text_back(id):
+    data = {k: v.strip() for k, v in request.get_json().items()}
+    schema = ResponseInputSchema()
+    errors = schema.validate(data)
+
+    if errors:
+        # Validation Error
+        abort(422, str(errors))
+    else:
+        ticket = Ticket.query.filter_by(id=id, status="open").first()
+        if ticket:
+            resp = Response(ticket_id=id,
+                            user_id=current_user.id,
+                            message=data['message'])
+            db.session.add(resp)
+            db.session.commit()
+            return jsonify({'id': id, 'message': resp.message}), 201
+        else:
+            abort(422, str({'error': 'Ticket already closed'}))
+
+
+@student_permission.require()
+@ticket_module.route('/others/<id>', methods=['GET'])
+def fetch_others_detail(id):
+    ticket = Ticket.query.filter_by(id=id).first()
+    messages = []
+    for r in ticket.responses:
+        messages.append([r.message, r.created_at])
+    return jsonify({'id': ticket.id, 'subject': ticket.subject, 'created_on': ticket.created_at,
+                    'status': ticket.status, 'messages': messages})

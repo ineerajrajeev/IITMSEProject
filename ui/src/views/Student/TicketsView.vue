@@ -28,16 +28,12 @@
               </div>
               <div class="md:flex-grow">
                 <h2 class="text-2xl font-medium text-gray-900 title-font mb-2">
-                  Bitters hashtag waistcoat fashion axe chia unicorn
+                  {{ ticket.subject }}
                 </h2>
-                <p class="leading-relaxed">
-                  Glossier echo park pug, church-key sartorial biodiesel
-                  vexillologist pop-up snackwave ramps cornhole. Marfa 3 wolf
-                  party messenger bag selfies, poke vaporware kombucha
-                  lumbersexual pork belly polaroid hoodie portland craft beer.
-                </p>
-                <a class="text-indigo-500 inline-flex items-center mt-4"
-                  >Learn More
+                <a
+                  class="text-indigo-500 inline-flex items-center mt-4"
+                  v-bind="{ href: '/student/tickets/' + ticket.id }"
+                  >View
                   <svg
                     class="w-4 h-4 ml-2"
                     viewBox="0 0 24 24"
@@ -99,16 +95,12 @@
               </div>
               <div class="md:flex-grow">
                 <h2 class="text-2xl font-medium text-gray-900 title-font mb-2">
-                  Bitters hashtag waistcoat fashion axe chia unicorn
+                  {{ ticket.subject }}
                 </h2>
-                <p class="leading-relaxed">
-                  Glossier echo park pug, church-key sartorial biodiesel
-                  vexillologist pop-up snackwave ramps cornhole. Marfa 3 wolf
-                  party messenger bag selfies, poke vaporware kombucha
-                  lumbersexual pork belly polaroid hoodie portland craft beer.
-                </p>
-                <a class="text-indigo-500 inline-flex items-center mt-4"
-                  >Learn More
+                <a
+                  class="text-indigo-500 inline-flex items-center mt-4"
+                  v-bind="{ href: '/student/tickets/' + ticket.id }"
+                  >View
                   <svg
                     class="w-4 h-4 ml-2"
                     viewBox="0 0 24 24"

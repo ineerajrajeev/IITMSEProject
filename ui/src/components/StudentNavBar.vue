@@ -57,27 +57,12 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "StudentNavBar",
   methods: {
     logout: async function () {
-      await axios
-        .post("http://localhost:8000/api/signout", {
-          headers: {
-            "Content-Type": "application/json",
-            "Authentication-token": localStorage.getItem("token"),
-          },
-        })
-        .then((response) => {
-          console.log(response.data);
-          localStorage.removeItem("token");
-          this.$router.push("/");
-        })
-        .catch((error) => {
-          alert(error.response.data.description);
-        });
+      localStorage.removeItem("token");
+      this.$router.push("/");
     },
   },
 };
